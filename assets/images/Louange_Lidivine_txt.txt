@@ -1,0 +1,179 @@
+
+
+Router>en 
+Router#conf ter
+Router(config)#hostname Louange
+Louange(config)#interface g0/1
+Louange(config-if)#ip add 192.168.200.1 255.255.255.0
+Louange(config-if)#no sh
+Louange(config-if)#exit
+
+Louange(config)#interface g0/0
+Louange(config-if)#ip add 10.10.10.13 255.255.255.252
+Louange(config-if)#no sh
+Louange(config-if)#exit
+
+Louange(config)#route EIGRP 555
+Louange(config-router)#network 192.168.200.0 0.0.0.63
+Louange(config-router)#network 10.10.10.12 0.0.0.3
+Louange(config-router)#passive-interface gig0/1
+Louange(config-router)#exit
+Louange(config)#
+Louange(config)#exit
+
+Louange#show ip EIGRP topology
+IP-EIGRP Topology Table for AS 555/ID(192.168.200.1)
+
+Codes: P - Passive, A - Active, U - Update, Q - Query, R - Reply,
+       r - Reply status
+
+P 10.10.10.0/30, 1 successors, FD is 3072
+         via 10.10.10.14 (3072/2816), GigabitEthernet0/0
+P 10.10.10.4/30, 1 successors, FD is 3328
+         via 10.10.10.14 (3328/3072), GigabitEthernet0/0
+P 10.10.10.8/30, 1 successors, FD is 3072
+         via 10.10.10.14 (3072/2816), GigabitEthernet0/0
+P 10.10.10.12/30, 1 successors, FD is 2816
+         via Connected, GigabitEthernet0/0
+P 192.168.200.0/24, 1 successors, FD is 5120
+         via Connected, GigabitEthernet0/1
+Louange#
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+Router>en
+Router#conf ter
+Router(config)#host lidvine
+lidvine(config)#interface g0/1
+lidvine(config-if)#ip add 10.10.10.14 255.255.255.252
+lidvine(config-if)#no sh
+lidvine(config-if)#exit
+
+lidvine(config-if)#interface gig0/0
+lidvine(config-if)#ip add 10.10.10.10 255.255.255.252
+lidvine(config-if)#no sh
+lidvine(config-if)#exit
+
+lidvine(config)#interface gig0/2
+lidvine(config-if)#ip add 10.10.10.1 255.255.255.252
+lidvine(config-if)#no sh
+lidvine(config-if)#exit
+
+lidvine(config)#route EIGRP
+lidvine(config)#route EIGRP 555
+lidvine(config-router)#network 10.10.10.8 0.0.0.3
+lidvine(config-router)#network 10.10.10.0 0.0.0.3
+lidvine(config-router)#network 10.10.10.12 0.0.0.3
+lidvine(config-router)#exit
+
+lidvine>en
+lidvine#show ip EIGRP topology
+IP-EIGRP Topology Table for AS 555/ID(10.10.10.14)
+
+Codes: P - Passive, A - Active, U - Update, Q - Query, R - Reply,
+       r - Reply status
+
+P 10.10.10.0/30, 1 successors, FD is 2816
+         via Connected, GigabitEthernet0/2
+P 10.10.10.4/30, 1 successors, FD is 3072
+         via 10.10.10.9 (3072/2816), GigabitEthernet0/0
+P 10.10.10.8/30, 1 successors, FD is 2816
+         via Connected, GigabitEthernet0/0
+P 10.10.10.12/30, 1 successors, FD is 2816
+         via Connected, GigabitEthernet0/1
+P 192.168.200.0/24, 1 successors, FD is 5376
+         via 10.10.10.13 (5376/5120), GigabitEthernet0/1
+lidvine#
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Router>en
+Router#conf ter
+apple(config)#host db
+
+db(config)#interface gig 0/0
+db(config-if)#ip add 10.10.10.5 255.255.255.252
+db(config-if)#no sh
+db(config-if)#exit
+
+db(config)#interface gig0/2
+db(config-if)#ip add 192.168.8.1 255.255.255.0
+db(config-if)#no sh
+db(config-if)#exit
+	
+db(config)#int g0/1
+db(config-if)#ip add 10.10.10.2 255.255.255.252
+db(config-if)#no sh 
+db(config-if)#exit
+
+db(config)#route EIGRP 555
+db(config-router)#network 10.10.10.0 0.0.0.3
+db(config-router)#network 10.10.10.4 0.0.0.3
+db(config-router)#passive-interface gig0/2
+db(config-router)#exit
+db(config)#exit
+db#show ip EIGRP topology
+IP-EIGRP Topology Table for AS 555/ID(192.168.100.1)
+
+Codes: P - Passive, A - Active, U - Update, Q - Query, R - Reply,
+       r - Reply status
+
+P 10.10.10.0/30, 1 successors, FD is 2816
+         via Connected, GigabitEthernet0/1
+P 10.10.10.4/30, 1 successors, FD is 3328
+         via 10.10.10.1 (3328/3072), GigabitEthernet0/1
+P 10.10.10.8/30, 1 successors, FD is 3072
+         via 10.10.10.1 (3072/2816), GigabitEthernet0/1
+P 10.10.10.12/30, 1 successors, FD is 3072
+         via 10.10.10.1 (3072/2816), GigabitEthernet0/1
+P 192.168.200.0/24, 1 successors, FD is 5632
+         via 10.10.10.1 (5632/5376), GigabitEthernet0/1
+         
+         
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Router>en
+Router#conf ter
+Router(config)#host apple
+apple(config)#interface gig0/1
+apple(config-if)#ip address 10.10.10.6 255.255.255.252
+apple(config-if)#no sh
+apple(config-if)#exit
+
+apple(config)#interface gig0/0
+apple(config-if)#ip add 192.168.100.1 255.255.255.192
+apple(config-if)#no sh
+apple(config-if)#exit
+
+apple(config)#int g0/2
+apple(config-if)#ip add 10.10.10.9 255.255.255.252
+apple(config-if)#no sh
+apple(config-if)#exit
+
+apple(config)#route EIGRP 555
+apple(config-router)#network 10.10.10.8 0.0.0.3
+apple(config-router)#network 10.10.10.4 0.0.0.3
+apple(config-router)#passive-interface gig0/0
+apple(config-router)#exit
+
+apple#show ip EIGRP topology
+IP-EIGRP Topology Table for AS 555/ID(192.168.100.1)
+
+Codes: P - Passive, A - Active, U - Update, Q - Query, R - Reply,
+       r - Reply status
+
+P 10.10.10.0/30, 1 successors, FD is 3072
+         via 10.10.10.10 (3072/2816), GigabitEthernet0/2
+P 10.10.10.4/30, 1 successors, FD is 2816
+         via Connected, GigabitEthernet0/1
+P 10.10.10.8/30, 1 successors, FD is 2816
+         via Connected, GigabitEthernet0/2
+P 10.10.10.12/30, 1 successors, FD is 3072
+         via 10.10.10.10 (3072/2816), GigabitEthernet0/2
+P 192.168.200.0/24, 1 successors, FD is 5632
+         via 10.10.10.10 (5632/5376), GigabitEthernet0/2
+apple#
