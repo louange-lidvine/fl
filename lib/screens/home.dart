@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import '../constants/colors.dart';
 import '../widgets/todo_item.dart';
 import '../model/todo.dart';
-import '../widgets/bottom-nav.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 // Import BottomNavigationExample here
-import '../widgets/bottom-nav.dart';
+// import '../widgets/bottom-nav.dart';
 
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
-
   @override
   _HomeState createState() => _HomeState();
 }
@@ -113,27 +112,30 @@ class _HomeState extends State<Home> {
         ],
       ),
       // Add BottomNavigationExample here
-      bottomNavigationBar: BottomNavigationExample(
-        onTabChanged: (index) {
-          // Handle tab change
-          if (index == 0) {
-            // If "Home" tab is selected, navigate to the Home screen
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Home()),
-            );
-          }
-          // Add more conditions for other tabs if needed
-        },
-      ),
+      // bottomNavigationBar: BottomNavigationExample(
+      //   onTabChanged: (index) {
+      //     // Handle tab changes if needed
+      //   },
+      // ),
     );
   }
 
   void _handleToDoChange(Todo todo) {
     setState(() {
       todo.isDone = !todo.isDone;
+      if (todo.isDone) {
+        // todo.isCompleted = true;
+        // _saveCompletedTodo(todo);
+      }
     });
   }
+
+  // void _saveCompletedTodo(Todo todo) async {
+  //   // final prefs = await SharedPreferences.getInstance();
+  //   List<String>? completedList = prefs.getStringList('completedTodos') ?? [];
+  //   completedList.add(todo.id!);
+  //   // await prefs.setStringList('completedTodos', completedList);
+  // }
 
   void _deleteTodoChange(String id) {
     setState(() {
